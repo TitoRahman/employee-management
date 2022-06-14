@@ -1,11 +1,11 @@
 import React from 'react'
 import { Container, Nav, Navbar, Table } from 'react-bootstrap'
 import axios from 'axios'
-import { FaRegEye } from "react-icons/fa";
-import Add from './modals/Add.Modal';
-import { useEffect } from 'react';
-import Delete from './modals/Delete.Modal';
-import Edit from './modals/Edit.Modal';
+import Add from './modals/Add.Modal'
+import { useEffect } from 'react'
+import Delete from './modals/Delete.Modal'
+import Edit from './modals/Edit.Modal'
+import View from './modals/View.Modal'
 
 const EmployeeTable = () => {
   const fetchData = async () => {
@@ -61,7 +61,7 @@ const EmployeeTable = () => {
                     <td className="align-middle">{Address}</td>
                     <td width={30}>
                       <ul className="list-group list-group-horizontal">
-                        <li className="list-group-item align-middle"><FaRegEye color='#6297FC' /></li>
+                        <View employee={JSON.stringify(employee)}/>
                         <Edit employee={JSON.stringify(employee)} />
                         <Delete employee={JSON.stringify(employee)} />
                       </ul>
