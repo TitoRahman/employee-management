@@ -1,7 +1,7 @@
 import React from 'react'
 import {Container, Nav, Navbar, Table } from 'react-bootstrap'
 import axios from 'axios'
-import {FaUserTimes, FaUserEdit,  FaRegEye} from "react-icons/fa";
+import {FaUserEdit,  FaRegEye} from "react-icons/fa";
 import Add from './modals/Add.Modal';
 import { useEffect } from 'react';
 import Delete from './modals/Delete.Modal';
@@ -20,7 +20,7 @@ const EmployeeTable = () => {
   useEffect(() => {
     fetchData();
   }, [])
-  
+
   const [employees, setEmployees] = React.useState([]);
   return (<>
       <div style={{margin: "5em"}}/>
@@ -50,7 +50,7 @@ const EmployeeTable = () => {
             <tbody>
               {
                 employees.map((employee, index) => {
-                  const { FirstName, LastName, Email, Address, Phone } = employee
+                  const {FirstName, LastName, Email, Address, Phone } = employee
                   return (
                     <tr key={index}>
                       <td className="align-middle">{FirstName}</td>
@@ -62,7 +62,7 @@ const EmployeeTable = () => {
                         <ul className="list-group list-group-horizontal">
                           <li className="list-group-item align-middle"><FaRegEye color='#6297FC'/></li>
                           <li className="list-group-item align-middle"><FaUserEdit color='#FEBF01'/></li>
-                          <Delete/>
+                          <Delete employee={JSON.stringify(employee)}/>
                         </ul>
                       </td>
                     </tr>
