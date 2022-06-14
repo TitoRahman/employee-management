@@ -9,7 +9,7 @@ router.post('/employee/add', async (req, res) => {
     const Address = req.body.Address;
     const Phone = req.body.Phone;
 
-    const employee = new EmployeeModel({
+    const employee = new Employee({
         FirstName: FirstName,
         LastName: LastName,
         Email: Email,
@@ -27,12 +27,17 @@ router.post('/employee/add', async (req, res) => {
 
 // GET /api/employees - untuk menampilkan semua employee
 router.get('/employees', async (req, res) => {
-    Employee.find({}, (err, data) => {
-        if (err) {
-            res.send(err);
-        }
-        res.send(data);
-    });
+    try {
+        Employee.find({}, (err, data) => {
+            if (err) {
+                res.send(err);
+            }
+            res.send(data);
+        });
+    } catch (err) {
+        console.log(err);
+    }
+    
 });
 
 // GET /api/employees/:id - untuk menampilkan employee by id
