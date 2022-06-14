@@ -54,17 +54,16 @@ router.get('/employees/:id', async (req, res) => {
 // PATCH /api/employees/:id - update employee by id
 router.patch('/employees/:id', async (req, res) => {
     try {
-        const id = req.params.id;
-        const updatedData = req.body;
-        const options = { new: true };
-
-        const result = await Employee.findByIdAndUpdate(id, updatedData, options);
+        const result = await Employee.findByIdAndUpdate(
+            req.params.id, 
+            req.body
+            );
         
-        console.log(`${data.name} has been updated`)
-        res.send(result);
+        console.log(`${result._id} has been updated`)
+        console.log(result);
     }
     catch (error) {
-        res.status(400).json({ message: error.message })
+        res.status(400).json("something went wrong ->" + error);
     }
 })
 // DELETE /api/employees/:id - hapus employee by id
