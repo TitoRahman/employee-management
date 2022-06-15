@@ -38,18 +38,23 @@ export default class Edit extends Component {
       [event.target.id]: event.target.value
     });
   }
-  handleSubmit() {
+  async handleSubmit() {
     const userId = JSON.parse(this.props.employee)._id;
+    const employee = {
+      userId,
+      Firstname : this.state.FirstName,
+      Lastname : this.state.LastName,
+      Email : this.state.Email,
+      Phone : this.state.Phone,
+      Address : this.state.Address
+    }
     try {
-      axios.patch(
+      const request = await axios.patch(
         'http://localhost:3001/api/employees/' + userId, 
-      {
-        Firstname : this.state.FirstName,
-        Lastname : this.state.LastName,
-        Email : this.state.Email,
-        Phone : this.state.Phone,
-        Address : this.state.Address
-      })
+        employee
+      )
+      console.log(employee)
+      console.log(request.data)
       this.handleModal();
     } catch (error) {
       console.log(error);
