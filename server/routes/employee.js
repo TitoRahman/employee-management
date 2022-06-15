@@ -37,7 +37,6 @@ router.get('/employees', async (req, res) => {
     } catch (err) {
         console.log(err);
     }
-    
 });
 
 // GET /api/employees/:id - untuk menampilkan employee by id
@@ -52,15 +51,21 @@ router.get('/employees/:id', async (req, res) => {
     }
 });
 // PATCH /api/employees/:id - update employee by id
-router.patch('/employees/:id', async (req, res) => {
+router.patch('/employees/:id', (req, res) => {
     try {
-        const result = await Employee.findByIdAndUpdate(
+        Employee.findByIdAndUpdate(
             req.params.id, 
-            req.body
-            );
-        
-        console.log(`${result._id} has been updated`)
-        console.log(result);
+            req.body,
+            {new: true}
+            ).then((employee) => {
+                if (!employee) {
+                    return res.status(404).send()
+                }
+                res.send(employee)
+                console.log(employee)
+            }).catch((err) => {
+                res.status(500).send(err)
+            })
     }
     catch (error) {
         res.status(400).json("something went wrong ->" + error);
