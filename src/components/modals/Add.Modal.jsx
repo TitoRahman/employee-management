@@ -21,7 +21,7 @@ export default class Add extends Component {
 
     handleModal() {
         this.setState({show: !this.state.show});
-        console.log(this.state.show);
+        this.props.updateTable()
     } 
     handleChange(event) {
         this.setState({
