@@ -38,7 +38,7 @@ export default class Edit extends Component {
       [event.target.id]: event.target.value
     });
   }
-  handleSubmit() {
+  async handleSubmit() {
     const userId = JSON.parse(this.props.employee)._id;
     const employee = {
       FirstName: this.state.FirstName,
@@ -49,7 +49,7 @@ export default class Edit extends Component {
     }
     console.table(employee)
     try {
-      axios.patch(
+      const request = await axios.patch(
         'http://localhost:3001/api/employees/' + userId, 
         employee
         )
