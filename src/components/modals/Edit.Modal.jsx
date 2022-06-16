@@ -49,7 +49,7 @@ export default class Edit extends Component {
     }
     console.table(employee)
     try {
-      const request = await axios.patch(
+      await axios.patch(
         'http://localhost:3001/api/employees/' + userId, 
         employee
         )

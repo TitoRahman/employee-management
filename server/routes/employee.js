@@ -51,7 +51,7 @@ router.get('/employees/:id', async (req, res) => {
     }
 });
 // PATCH /api/employees/:id - update employee by id
-router.patch('/employees/:id', (req, res) => {
+router.patch('/employees/:id', async (req, res) => {
     try {
         // console.log(req.body);
         // const result = await Employee.findByIdAndUpdate(
