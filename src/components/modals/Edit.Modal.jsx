@@ -40,16 +40,19 @@ export default class Edit extends Component {
   }
   handleSubmit() {
     const userId = JSON.parse(this.props.employee)._id;
+    const employee = {
+      FirstName: this.state.FirstName,
+      LastName: this.state.LastName,
+      Email: this.state.Email,
+      Address: this.state.Address,
+      Phone: this.state.Phone
+    }
+    console.table(employee)
     try {
       axios.patch(
         'http://localhost:3001/api/employees/' + userId, 
-      {
-        Firstname : this.state.FirstName,
-        Lastname : this.state.LastName,
-        Email : this.state.Email,
-        Phone : this.state.Phone,
-        Address : this.state.Address
-      })
+        employee
+        )
       this.handleModal();
     } catch (error) {
       console.log(error);
