@@ -32,7 +32,7 @@ const EmployeeTable = () => {
         </Navbar.Brand>
         <Nav className="ms-auto">
           <Nav.Item>
-            <Add />
+            <Add updateTable={fetchData}/>
           </Nav.Item>
         </Nav>
       </Navbar>
@@ -61,9 +61,9 @@ const EmployeeTable = () => {
                     <td className="align-middle">{Phone}</td>
                     <td width={30}>
                       <ul className="list-group list-group-horizontal">
-                        <View employee={JSON.stringify(employee)}/>
-                        <Edit employee={JSON.stringify(employee)} />
-                        <Delete employee={JSON.stringify(employee)} />
+                        <View  employee={JSON.stringify(employee)}/>
+                        <Edit updateTable={fetchData} employee={JSON.stringify(employee)} />
+                        <Delete updateTable={fetchData} employee={JSON.stringify(employee)} />
                       </ul>
                     </td>
                   </tr>
