@@ -2,6 +2,9 @@ import React, { Component } from 'react'
 import { Modal, Button } from 'react-bootstrap'
 import { FaUserTimes } from 'react-icons/fa'
 import axios from 'axios'
+import toast, { Toaster } from 'react-hot-toast';
+
+
 export default class Delete extends Component {
   constructor() {
     super();
@@ -18,6 +21,17 @@ export default class Delete extends Component {
   }
 
   handleSubmit() {
+    /* const toast = {
+      type: 'success',
+      title: 'Success',
+      description: 'Employee Deleted Successfully',
+      timeOut: 3000,
+      position: 'top-right',
+      showCloseButton: true,
+      animation: true,
+      hideProgressBar: true,
+      closeButton: true
+    } */
     const userId = JSON.parse(this.props.employee)._id;
     try {
       axios.delete('http://localhost:3001/api/employees/' + userId).then(res => {
@@ -27,9 +41,11 @@ export default class Delete extends Component {
         console.log(err);
       })
 
+      toast.success('Success delete employee!')
       console.log(`Employee with id ${userId} has been deleted`);
     } catch (error) {
       console.log(error);
+      toast.error('Failed delete employee!')
     }
     this.handleModal()
   }
@@ -37,6 +53,9 @@ export default class Delete extends Component {
   render() {
     return (
       <>
+        <Toaster
+          position="top-right"
+        />
         <li className="list-group-item align-middle" style={{ cursor: 'pointer' }} onClick={this.handleModal}>
           <FaUserTimes color='#F55847' />
         </li>

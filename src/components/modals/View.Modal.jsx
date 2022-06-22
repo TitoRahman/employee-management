@@ -1,6 +1,10 @@
 import React, { Component } from 'react'
 import { Modal, Button, Table } from 'react-bootstrap'
 import { FaRegEye } from 'react-icons/fa'
+import axios from 'axios';
+
+import toast, { Toaster } from 'react-hot-toast';
+
 
 export default class View extends Component {
   constructor() {
@@ -53,12 +57,12 @@ export default class View extends Component {
               <td>{JSON.parse(this.props.employee).Email}</td>
             </tr>
             <tr>
-              <th>Phone</th>
-              <td>{JSON.parse(this.props.employee).Phone}</td>
-            </tr>
-            <tr>
               <th>Address</th>
               <td>{JSON.parse(this.props.employee).Address}</td>
+            </tr>
+            <tr>
+              <th>Phone</th>
+              <td>{JSON.parse(this.props.employee).Phone}</td>
             </tr>
           </thead>
         </Table>

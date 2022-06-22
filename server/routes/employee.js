@@ -37,6 +37,7 @@ router.get('/employees', async (req, res) => {
     } catch (err) {
         console.log(err);
     }
+    
 });
 
 // GET /api/employees/:id - untuk menampilkan employee by id
@@ -53,13 +54,6 @@ router.get('/employees/:id', async (req, res) => {
 // PATCH /api/employees/:id - update employee by id
 router.patch('/employees/:id', async (req, res) => {
     try {
-        // console.log(req.body);
-        // const result = await Employee.findByIdAndUpdate(
-        //     req.params.id, 
-        //     req.body
-        //     );
-        // console.log(`${result.FirstName} has been updated`)
-        // res.send(await result)
         const id = req.params.id;
         const updatedData = req.body;
         const options = { new: true };

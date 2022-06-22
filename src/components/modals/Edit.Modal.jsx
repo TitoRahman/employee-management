@@ -2,6 +2,7 @@ import axios from 'axios';
 import React, { Component } from 'react'
 import { Modal, Button } from 'react-bootstrap'
 import { FaUserEdit } from 'react-icons/fa'
+import toast, { Toaster } from 'react-hot-toast';
 
 export default class Edit extends Component {
   constructor() {
@@ -48,19 +49,30 @@ export default class Edit extends Component {
       Phone: this.state.Phone
     }
     console.table(employee)
-    try {
-      await axios.patch(
-        'http://localhost:3001/api/employees/' + userId, 
-        employee
-        )
-      this.handleModal();
-    } catch (error) {
-      console.log(error);
+
+    if(this.state.FirstName === '' || this.state.LastName === '' || this.state.Address === '' || this.state.Phone === '') {
+      toast.error("Please fill out all fields");
+      console.log(this.state);
+    }else{
+      try {
+        await axios.patch(
+          'http://localhost:3001/api/employees/' + userId, 
+          employee
+          )
+        this.handleModal();
+        toast.success('Success update employee!')
+      } catch (error) {
+        console.log(error);
+        toast.error('Failed to update employee!')
+      }
     }
   }
   render() {
     return (
       <>
+        <Toaster
+          position="top-right"
+        />
         <li className="list-group-item align-middle"
           style={{
             cursor: 'pointer'
@@ -81,25 +93,25 @@ export default class Edit extends Component {
             <Modal.Title>Add Employee</Modal.Title>
           </Modal.Header>
           <Modal.Body>
-            <div className="form-group">
+            <div className="form-group mb-2">
               <label htmlFor="firstName">First Name</label>
               <input type="text" className="form-control" id="FirstName" placeholder="First Name" value={this.state.FirstName} onChange={this.handleChange} />
             </div>
-            <div className="form-group">
+            <div className="form-group mb-2">
               <label htmlFor="lastName">Last Name</label>
               <input type="text" className="form-control" id="LastName" placeholder="Last Name" value={this.state.LastName} onChange={this.handleChange} />
             </div>
-            <div className="form-group">
+            <div className="form-group mb-2">
               <label htmlFor="email">Email</label>
-              <input type="text" className="form-control" id="Email" placeholder="Email" value={this.state.Email} onChange={this.handleChange} />
+              <input type="text" className="form-control" id="Email" placeholder="Email" value={this.state.Email} onChange={this.handleChange} readOnly/>
             </div>
-            <div className="form-group">
-              <label htmlFor="phone">Phone</label>
-              <input type="text" className="form-control" id="Phone" placeholder="Phone" value={this.state.Phone} onChange={this.handleChange} />
-            </div>
-            <div className="form-group">
+            <div className="form-group mb-2">
               <label htmlFor="address">Address</label>
-              <input type="text" className="form-control" id="Address" placeholder="Address" value={this.state.Address} onChange={this.handleChange} />
+              <textarea  type="text" className="form-control" id="Address" placeholder="Address" value={this.state.Address} onChange={this.handleChange}/>
+            </div>
+            <div className="form-group mb-2">
+              <label htmlFor="phone">Phone</label>
+              <input type="text" className="form-control" id="Phone" placeholder="Phone" value={this.state.Phone} onChange={this.handleChange}/>
             </div>
           </Modal.Body>
           <Modal.Footer>

@@ -57,8 +57,8 @@ const EmployeeTable = () => {
                     <td className="align-middle">{FirstName}</td>
                     <td className="align-middle">{LastName}</td>
                     <td className="align-middle">{Email}</td>
-                    <td className="align-middle">{Phone}</td>
                     <td className="align-middle">{Address}</td>
+                    <td className="align-middle">{Phone}</td>
                     <td width={30}>
                       <ul className="list-group list-group-horizontal">
                         <View employee={JSON.stringify(employee)}/>
