@@ -1,6 +1,6 @@
 import axios from 'axios';
 import React, { Component } from 'react'
-import { Modal, Button } from 'react-bootstrap'
+import { Modal, Button, Spinner} from 'react-bootstrap'
 import { FaUserEdit } from 'react-icons/fa'
 import toast, { Toaster } from 'react-hot-toast';
 
@@ -8,6 +8,7 @@ export default class Edit extends Component {
   constructor() {
     super();
     this.state = {
+      isLoading: false,
       show: false,
       FirstName: '',
       LastName: '',
@@ -32,7 +33,6 @@ export default class Edit extends Component {
   }
   handleModal() {
     this.setState({ show: !this.state.show });
-    this.props.updateTable()
   }
   handleChange(event) {
     this.setState({
@@ -55,17 +55,21 @@ export default class Edit extends Component {
       console.log(this.state);
     }else{
       try {
+        this.setState({isLoading : true})
         await axios.patch(
-          'http://localhost:3001/api/employees/' + userId, 
+          'https://untitled-889uamqiqzhg.runkit.sh/api/employees/' + userId, 
           employee
           )
         this.handleModal();
+        this.setState({isLoading : false})
         toast.success('Success update employee!')
       } catch (error) {
         console.log(error);
+        this.setState({isLoading : false})
         toast.error('Failed to update employee!')
       }
     }
+    this.props.updateTable()
   }
   render() {
     return (
@@ -115,7 +119,17 @@ export default class Edit extends Component {
             </div>
           </Modal.Body>
           <Modal.Footer>
-            <Button type="button" className="btn btn-primary" onClick={this.handleSubmit}>Save</Button>
+            <Button type="button" className="btn btn-primary" onClick={this.handleSubmit}>
+              {this.state.isLoading ? 
+              <>
+                <Spinner animation="border" size='sm' role="status">
+                  <span className="visually-hidden">Loading...</span>
+                </Spinner>
+              </> : 
+              <>
+                Save State
+              </>}
+              </Button>
             <Button type="button" className="btn btn-secondary" onClick={this.handleModal}>Close</Button>
           </Modal.Footer>
         </Modal>

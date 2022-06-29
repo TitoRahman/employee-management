@@ -18,6 +18,7 @@ router.post('/employee/add', async (req, res) => {
     });
 
     try {
+        if (Employee.findByEmail)
         await employee.save();
         res.send("inserted data");
     } catch (err) {

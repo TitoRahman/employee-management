@@ -1,5 +1,5 @@
 import React from 'react'
-import { Container, Nav, Navbar, Table } from 'react-bootstrap'
+import { Container, Nav, Navbar, Table, Spinner} from 'react-bootstrap'
 import axios from 'axios'
 import Add from './modals/Add.Modal'
 import { useEffect } from 'react'
@@ -9,11 +9,15 @@ import View from './modals/View.Modal'
 
 const EmployeeTable = () => {
   const fetchData = async () => {
-    axios.get('http://localhost:3001/api/employees')
+    setIsLoading(true)
+    axios.get('https://untitled-889uamqiqzhg.runkit.sh/api/employees')
       .then(res => {
         setEmployees(res.data);
+        setIsLoading(false)
+        console.log('Table Updated')
       })
       .catch(err => {
+        setIsLoading(false)
         console.log(err);
       })
   }
@@ -23,6 +27,8 @@ const EmployeeTable = () => {
   }, [])
 
   const [employees, setEmployees] = React.useState([]);
+  const [isLoading, setIsLoading] = React.useState(false);
+
   return (<>
     <div style={{ margin: "5em" }} />
     <Container>
@@ -37,7 +43,14 @@ const EmployeeTable = () => {
         </Nav>
       </Navbar>
       <Container className="shadow-sm p-3 mb-5 bg-white rounded">
-        <Table striped bordered hover>
+        {
+        isLoading ? 
+        <>
+          <Spinner animation="border" role="status"/>
+          <p>Loading Table Content</p>
+        </> : 
+        <>
+          <Table striped bordered hover>
           <thead>
             <tr>
               <th>First Name</th>
@@ -72,6 +85,9 @@ const EmployeeTable = () => {
             }
           </tbody>
         </Table>
+        </>
+        }
+        
       </Container>
     </Container>
   </>

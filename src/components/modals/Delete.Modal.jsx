@@ -17,24 +17,12 @@ export default class Delete extends Component {
 
   handleModal() {
     this.setState({ show: !this.state.show });
-    this.props.updateTable()
   }
 
   handleSubmit() {
-    /* const toast = {
-      type: 'success',
-      title: 'Success',
-      description: 'Employee Deleted Successfully',
-      timeOut: 3000,
-      position: 'top-right',
-      showCloseButton: true,
-      animation: true,
-      hideProgressBar: true,
-      closeButton: true
-    } */
     const userId = JSON.parse(this.props.employee)._id;
     try {
-      axios.delete('http://localhost:3001/api/employees/' + userId).then(res => {
+      axios.delete('https://untitled-889uamqiqzhg.runkit.sh/api/employees/' + userId).then(res => {
         console.log(res);
         console.log(res.data);
       }).catch(err => {
@@ -47,6 +35,7 @@ export default class Delete extends Component {
       console.log(error);
       toast.error('Failed delete employee!')
     }
+    this.props.updateTable()
     this.handleModal()
   }
 

@@ -23,7 +23,6 @@ export default class Add extends Component {
 
     handleModal() {
         this.setState({show: !this.state.show});
-        this.props.updateTable()
     } 
     handleChange(event) {
         this.setState({
@@ -33,11 +32,18 @@ export default class Add extends Component {
     handleSubmit() {
         if(this.state.FirstName === '' || this.state.LastName === '' || this.state.Email === '' || this.state.Address === '' || this.state.Phone === '') {
             toast.error("Please fill out all fields");
-            console.log(this.state);
         }else{
-            axios.post('http://localhost:3001/api/employee/add', this.state).then(res => {
-                console.log(res);
+            axios.post('https://untitled-889uamqiqzhg.runkit.sh/api/employee/add', this.state).then(res => {
                 console.log(res.data);
+                this.props.updateTable(
+                        {
+                            FirstName : this.state.FirstName,
+                            LastName : this.state.LastName,
+                            Email : this.state.Email,
+                            Address : this.state.Address,
+                            Phone : this.state.Phone
+                        }
+                    )
                 toast.success('Successfully add employee!')
             }).catch(err => {
                 console.log(err);
