@@ -64,7 +64,7 @@ const EmployeeTable = () => {
           <tbody>
             {
               employees.map((employee, index) => {
-                const { FirstName, LastName, Email, Address, Phone } = employee
+                const { FirstName, LastName, Email, Address, Phone } = employee;
                 return (
                   <tr key={index}>
                     <td className="align-middle">{FirstName}</td>

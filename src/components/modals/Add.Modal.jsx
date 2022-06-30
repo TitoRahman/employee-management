@@ -32,7 +32,16 @@ export default class Add extends Component {
     handleSubmit() {
         if(this.state.FirstName === '' || this.state.LastName === '' || this.state.Email === '' || this.state.Address === '' || this.state.Phone === '') {
             toast.error("Please fill out all fields");
-        }else{
+        } else if (this.state.Email !== '' && (!this.state.Email.includes('@') || !this.state.Email.includes('.'))) {
+            toast.error("Please enter a valid email");
+        } else if (this.state.Phone !== '' && !this.state.Phone.match(/^\d{10,12}$/)) {
+            if (this.state.Phone.length < 10 || this.state.Phone.length > 12) {
+                toast.error("Please enter 10-12 digits");
+            } else {
+                toast.error("Please enter a phone number");
+            }
+        }
+        else{
             axios.post('https://untitled-889uamqiqzhg.runkit.sh/api/employee/add', this.state).then(res => {
                 console.log(res.data);
                 this.props.updateTable(
