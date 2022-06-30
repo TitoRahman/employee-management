@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Modal, Button } from 'react-bootstrap'
+import { Modal, Button, Spinner } from 'react-bootstrap'
 import { FaUserTimes } from 'react-icons/fa'
 import axios from 'axios'
 import toast, { Toaster } from 'react-hot-toast';
@@ -9,6 +9,7 @@ export default class Delete extends Component {
   constructor() {
     super();
     this.state = {
+      isLoading:false,
       show: false
     }
     this.handleModal = this.handleModal.bind(this);
@@ -20,22 +21,21 @@ export default class Delete extends Component {
   }
 
   handleSubmit() {
+    this.setState({isLoading : true})
     const userId = JSON.parse(this.props.employee)._id;
     try {
       axios.delete('https://untitled-889uamqiqzhg.runkit.sh/api/employees/' + userId).then(res => {
-        console.log(res);
-        console.log(res.data);
+        this.props.updateTable({}, userId, 'delete');
+        this.setState({isLoading : false});
+        toast.success('Success delete employee!');
       }).catch(err => {
         console.log(err);
       })
-
-      toast.success('Success delete employee!')
-      console.log(`Employee with id ${userId} has been deleted`);
     } catch (error) {
       console.log(error);
       toast.error('Failed delete employee!')
+      this.setState({isLoading : false})
     }
-    this.props.updateTable()
     this.handleModal()
   }
 
@@ -61,7 +61,16 @@ export default class Delete extends Component {
             Are You Sure You Want To Delete This Employee?
           </Modal.Body>
           <Modal.Footer>
-            <Button type="button" className="btn btn-danger" onClick={this.handleSubmit}>Confirm</Button>
+            <Button type="button" className="btn btn-danger" onClick={this.handleSubmit}>
+            {this.state.isLoading ? 
+              <>
+                <Spinner animation="border" size='sm' role="status"/>
+              </> : 
+              <>
+                Confirm
+              </>
+            }
+            </Button>
             <Button type="button" className="btn btn-secondary" onClick={this.handleModal}>Cancel</Button>
           </Modal.Footer>
         </Modal>

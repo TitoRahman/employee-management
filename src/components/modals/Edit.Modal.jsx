@@ -48,17 +48,17 @@ export default class Edit extends Component {
       Address: this.state.Address,
       Phone: this.state.Phone
     }
-    console.table(employee)
 
     if(this.state.FirstName === '' || this.state.LastName === '' || this.state.Address === '' || this.state.Phone === '') {
       toast.error("Please fill out all fields");
       console.log(this.state);
-    } else if (this.state.Email !== '' && (!this.state.Email.includes('@') || !this.state.Email.includes('.'))) {
-      toast.error("Please enter a valid email");
     } else if (this.state.Phone !== '' && !this.state.Phone.match(/^\d{10,12}$/)) {
         if (this.state.Phone.length < 10 || this.state.Phone.length > 12) {
           toast.error("Please enter 10-12 digits");
-        } else {
+        } else if (this.state.Phone.match(/[a-zA-Z]/)) {
+          toast.error("Please enter a valid phone number");
+        }
+        else {
           toast.error("Please enter a phone number");
         }
     }else{
@@ -70,6 +70,7 @@ export default class Edit extends Component {
           )
         this.handleModal();
         this.setState({isLoading : false})
+        this.props.updateTable(employee, userId, 'edit');
         toast.success('Success update employee!')
       } catch (error) {
         console.log(error);
@@ -77,7 +78,6 @@ export default class Edit extends Component {
         toast.error('Failed to update employee!')
       }
     }
-    this.props.updateTable()
   }
   render() {
     return (

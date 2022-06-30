@@ -43,7 +43,6 @@ export default class Add extends Component {
         }
         else{
             axios.post('https://untitled-889uamqiqzhg.runkit.sh/api/employee/add', this.state).then(res => {
-                console.log(res.data);
                 this.props.updateTable(
                         {
                             FirstName : this.state.FirstName,
@@ -51,7 +50,9 @@ export default class Add extends Component {
                             Email : this.state.Email,
                             Address : this.state.Address,
                             Phone : this.state.Phone
-                        }
+                        },
+                        res.data._id,
+                        'add'
                     )
                 toast.success('Successfully add employee!')
             }).catch(err => {

@@ -1,5 +1,5 @@
 import React from 'react'
-import { Container, Nav, Navbar, Table, Spinner} from 'react-bootstrap'
+import { Container, Nav, Navbar, Table} from 'react-bootstrap'
 import axios from 'axios'
 import Add from './modals/Add.Modal'
 import { useEffect } from 'react'
@@ -9,25 +9,30 @@ import View from './modals/View.Modal'
 
 const EmployeeTable = () => {
   const fetchData = async () => {
-    setIsLoading(true)
     axios.get('https://untitled-889uamqiqzhg.runkit.sh/api/employees')
       .then(res => {
         setEmployees(res.data);
-        setIsLoading(false)
         console.log('Table Updated')
       })
       .catch(err => {
-        setIsLoading(false)
         console.log(err);
       })
   }
-
+  
   useEffect(() => {
     fetchData();
   }, [])
 
+  const updateTable2 = (data = null, id = null, action) => {
+    if (action === 'add') {
+      setEmployees([...employees, data]);
+    } else if (action === 'delete') {
+      setEmployees(employees.filter(employee => employee._id !== id));
+    } else if (action === 'edit') {
+      setEmployees(employees.map(employee => employee._id === id ? data : employee));
+    }
+  }
   const [employees, setEmployees] = React.useState([]);
-  const [isLoading, setIsLoading] = React.useState(false);
 
   return (<>
     <div style={{ margin: "5em" }} />
@@ -43,12 +48,7 @@ const EmployeeTable = () => {
         </Nav>
       </Navbar>
       <Container className="shadow-sm p-3 mb-5 bg-white rounded">
-        {
-        isLoading ? 
-        <>
-          <Spinner animation="border" role="status"/>
-          <p>Loading Table Content</p>
-        </> : 
+        { 
         <>
           <Table striped bordered hover>
           <thead>
@@ -75,8 +75,8 @@ const EmployeeTable = () => {
                     <td width={30}>
                       <ul className="list-group list-group-horizontal">
                         <View  employee={JSON.stringify(employee)}/>
-                        <Edit updateTable={fetchData} employee={JSON.stringify(employee)} />
-                        <Delete updateTable={fetchData} employee={JSON.stringify(employee)} />
+                        <Edit updateTable={updateTable2} employee={JSON.stringify(employee)} />
+                        <Delete updateTable={updateTable2} employee={JSON.stringify(employee)} />
                       </ul>
                     </td>
                   </tr>

@@ -18,7 +18,6 @@ export default class View extends Component {
 
   render() {
     return (<>
-    
       <li 
       className="list-group-item align-middle" 
       style={{
@@ -35,7 +34,7 @@ export default class View extends Component {
       centered
       >
       <Modal.Header closeButton onClick={this.handleModal}>
-        <Modal.Title>Delete Employee</Modal.Title>
+        <Modal.Title>View Employee</Modal.Title>
       </Modal.Header>
       <Modal.Body>
         <Table bordered>
@@ -64,7 +63,7 @@ export default class View extends Component {
         </Table>
       </Modal.Body>
       <Modal.Footer>
-        <Button type="button" className="btn btn-success" onClick={this.handleModal}>Confirm</Button>
+        <Button type="button" className="btn btn-success" onClick={this.handleModal}>Close</Button>
       </Modal.Footer>
       </Modal>
     </>
